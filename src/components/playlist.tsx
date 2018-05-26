@@ -1,8 +1,26 @@
 import * as React from 'react'
 import '../styles/playlist.scss'
 
-export default class extends React.Component {
-    constructor(props) {
+interface Room {
+    id: string
+    name: string
+}
+
+interface Message {
+    username: string
+    body: string
+}
+
+interface Props {
+    rooms: Room[]
+    messages: Message[]
+}
+
+interface State {}
+
+
+export default class Playlist extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props)
     }
 

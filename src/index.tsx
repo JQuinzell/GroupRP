@@ -1,6 +1,6 @@
 import * as React from 'react'
-import ReactDOM from 'react-dom'
-import Playlist from './components/playlist'
+import * as ReactDOM from 'react-dom'
+import Playlist from 'components/playlist'
 
 const rooms = [
     {

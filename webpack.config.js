@@ -2,17 +2,17 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.jsx',
+  entry: './src/index.tsx',
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist'
+    contentBase: path.join(__dirname, 'dist')
   },
+  mode: 'development',
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
+        test: /\.tsx?$/,
+        use: 'ts-loader'
       },
       {
         test: /\.scss$/,
@@ -27,7 +27,11 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [".jsx", ".js"]
+    extensions: [".tsx", ".ts", ".js", ".jsx"],
+    modules: [
+      path.resolve(__dirname, 'src'),
+      'node_modules'
+    ]
   },
   output: {
     filename: 'bundle.js',
