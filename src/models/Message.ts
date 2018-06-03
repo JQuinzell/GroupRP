@@ -1,9 +1,12 @@
-import {observable} from 'mobx'
-import Model from 'models/Model'
+import { observable } from 'mobx'
+import Room from './Room'
 
-export default class Message extends Model {
+export default class Message {
     id: string
-    userID: string
-    username: string
     @observable body: string
+    room: Room
+
+    constructor(attrs: any) {
+        Object.assign(this, attrs)
+    }
 }
