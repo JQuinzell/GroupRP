@@ -1,17 +1,32 @@
-import {fake} from 'faker'
-import { create as createRoom } from 'mocks/rooms'
-import { create as createMessage } from 'mocks/messages'
 import RoomStore from 'stores/RoomStore'
-import Room from 'models/Room'
-import MessageStore from './MessageStore';
+import ApolloClient from 'apollo-boost'
+import gql from 'graphql-tag'
 
 export function initializeStores() {
-    for(let i = 0; i < 3; i++) {
-        let room = createRoom({})
-        room = RoomStore.create(room)
-        for(let j = 0; j < 10; j++) {
-            const message = createMessage({})
-            MessageStore.create(message, room)
-        }
-    }
+    const client = new ApolloClient({
+        uri: 'http://localhost:3000/graphql'
+    })
+
+    client
+        .query({
+            query: gql`
+            {
+                rooms {
+                    _id
+                    name
+                    posts {
+                        _id
+                        body
+                    }
+                }
+            }
+        `
+        })
+        .then((resp: any) => {
+            console.log(resp.data.rooms)
+            resp.data.rooms.forEach(RoomStore.create)
+        })
+
+        .catch(err => console.log(err))
+
 }

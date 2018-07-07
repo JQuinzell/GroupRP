@@ -1,10 +1,11 @@
 import * as React from 'react'
-import '../styles/playlist.scss'
+import '../styles/ChatRoom.scss'
 import Room from 'models/Room'
 import Message from 'models/Message'
+import {observer} from 'mobx-react'
+import UIStore from 'stores/UIStore'
 
 interface Props {
-    rooms: Room[]
     messages: Message[]
 }
 
@@ -12,36 +13,28 @@ interface State {
     selectedRoom: Room
 }
 
-
-export default class Playlist extends React.Component<any, State> {
-    constructor(props: Props) {
-        super(props)
-
-        this.state = {
-            selectedRoom: props.rooms[0]
-        }
+@observer
+export default class ChatRoomWrapper extends React.Component<any, any> {
+    render() {
+        UIStore.loadRoom()
+        const room = UIStore.currentRoom || null
+        console.log(room)
+        return (
+            room && <ChatRoom room={room} />
+        )
     }
+}
 
-    selectRoom = (e: any) => {
-        const index = e.target.value
-        this.setState({
-            selectedRoom: this.props.rooms[index]
-        })
-    }
+@observer
+export class ChatRoom extends React.Component<any, {}> {
 
     render() {
-        let messages = this.state.selectedRoom.messages
+        let messages = this.props.room.messages
 
         return (
         <div className="chatbox">
             <div className="title">
                 <h1>Title</h1>
-                <div className="spacer"></div>
-                    <select name="text" onChange={this.selectRoom}>
-                    {this.props.rooms.map((room: Room, i: number) => (
-                        <option key={room.id} value={i}>{room.name}</option>
-                    ))}
-                </select>
             </div>
             <div className="messages">
                 {messages.map((message: any, i: number) => (
