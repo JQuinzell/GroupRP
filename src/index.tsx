@@ -1,12 +1,16 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import ChatRoom from './components/ChatRoom'
+import {Provider} from 'mobx-react'
 import {initializeStores} from 'stores'
-import RoomStore from 'stores/RoomStore'
+import GroupListing from 'components/groups/GroupListing'
+import GroupStore from 'stores/GroupStore'
 
 initializeStores()
 
 ReactDOM.render(
-    <ChatRoom />,
+    <Provider
+        GroupStore={GroupStore}>
+        <GroupListing />
+    </Provider>,
     document.getElementById('app')
 )
