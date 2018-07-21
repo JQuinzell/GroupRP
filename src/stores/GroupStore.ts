@@ -1,6 +1,7 @@
 import { observable, ObservableMap, computed } from 'mobx'
 import Group from 'models/Group'
 import client from 'api/client'
+import RoomStore from './RoomStore'
 
 class GroupStore {
     @observable data: ObservableMap<string, Group> = observable.map()
@@ -12,6 +13,7 @@ class GroupStore {
     create = (attrs: any) => {
         const group = new Group(attrs)
         this.data.set(group._id, group)
+        group.rooms.forEach(RoomStore.create)
         return group
     }
 
