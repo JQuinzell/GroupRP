@@ -2,6 +2,7 @@
 
     .cards {
         display: flex;
+        flex-wrap: wrap;
         
         .card {
             width: 300px;

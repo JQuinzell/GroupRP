@@ -25,14 +25,14 @@ class RoomListing extends React.Component<Props, {}> {
         const rooms = this.props.rooms
 
         return (
-            <div className="Rooms-listing">
+            <div className="card-listing">
                 <Typography align="center" variant="display2">
                     Rooms
                 </Typography>
 
-                <div className="Rooms">
+                <div className="cards">
                     {rooms.map((room, i) => (
-                        <Card key={i} className="Room-item">
+                        <Card key={i} className="card">
                             <CardContent>
                                 <Typography variant="title">
                                     <Link to="/chat">{room.name}</Link>
