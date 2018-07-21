@@ -36,7 +36,7 @@ class RoomListing extends React.Component<Props, {}> {
                         <Card key={i} className="card">
                             <CardContent>
                                 <Typography variant="title">
-                                    <Link to="/chat">{room.name}</Link>
+                                    <Link to={`/chat/${room._id}`}>{room.name}</Link>
                                 </Typography>
                             </CardContent>
                         </Card>
