@@ -10,6 +10,10 @@ class GroupStore {
         return Array.from(this.data.values())
     }
 
+    get = (id: string) => {
+        return this.data.get(id)
+    }
+
     create = (attrs: any) => {
         const group = new Group(attrs)
         this.data.set(group._id, group)
