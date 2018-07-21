@@ -1,5 +1,5 @@
 import GroupStore from './GroupStore'
 
-export function initializeStores() {
-    GroupStore.loadGroups()
+export async function initializeStores() {
+    await GroupStore.loadGroups()
 }
