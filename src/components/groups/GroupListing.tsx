@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { inject, observer } from "mobx-react";
+import {Link} from 'react-router-dom'
 import Group from 'models/Group'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -35,7 +36,7 @@ class GroupListing extends React.Component<Props, {}> {
                     <Card key={i} className="group-item">
                         <CardContent>
                             <Typography variant="title">
-                                {group.name}
+                                <Link to="/chat">{group.name}</Link>
                             </Typography>
                             
                             <Typography variant="body1">
