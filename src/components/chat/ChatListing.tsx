@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 @observer
 export default class RoomListingWrapper extends React.Component<any, any> {
     render() {
-        console.log(this.props.match.params.id)
         return <RoomListing rooms={this.props.RoomStore.rooms} />
     }
 }
