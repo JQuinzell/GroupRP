@@ -6,11 +6,13 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-@inject("RoomStore")
+@inject("GroupStore")
 @observer
 export default class RoomListingWrapper extends React.Component<any, any> {
     render() {
-        return <RoomListing rooms={this.props.RoomStore.rooms} />
+        const groupID = this.props.match.params.id
+        const rooms = this.props.GroupStore.get(groupID).rooms
+        return <RoomListing rooms={rooms} />
     }
 }
 
