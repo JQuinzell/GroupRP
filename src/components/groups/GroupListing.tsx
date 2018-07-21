@@ -35,7 +35,7 @@ class GroupListing extends React.Component<Props, {}> {
                     <Card key={i} className="group-item">
                         <CardContent>
                             <Typography variant="title">
-                                <Link to="/chat">{group.name}</Link>
+                                <Link to={`/groups/${group._id}/rooms`}>{group.name}</Link>
                             </Typography>
                             
                             <Typography variant="body1">
