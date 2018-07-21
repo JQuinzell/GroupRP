@@ -8,6 +8,7 @@ class RoomStore {
     @computed get rooms(): Room[] {
         return Array.from(this.data.values())
     }
+
     create = (attrs: any) => {
         const room = new Room(attrs)
         this.data.set(room.id, room)
