@@ -1,5 +1,5 @@
 import * as React from 'react'
-import '../../styles/ChatRoom.scss'
+import './styles/ChatRoom.scss'
 import Room from 'models/Room'
 import Message from 'models/Message'
 import {observer} from 'mobx-react'
