@@ -5,7 +5,8 @@ module.exports = {
   entry: './src/index.tsx',
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'dist')
+    contentBase: path.join(__dirname, 'dist'),
+    historyApiFallback: true
   },
   mode: 'development',
   module: {
