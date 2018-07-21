@@ -3,7 +3,7 @@ import '../styles/ChatRoom.scss'
 import Room from 'models/Room'
 import Message from 'models/Message'
 import {observer} from 'mobx-react'
-import UIStore from 'stores/UIStore'
+import RoomStore from 'stores/RoomStore'
 
 interface Props {
     messages: Message[]
@@ -16,9 +16,8 @@ interface State {
 @observer
 export default class ChatRoomWrapper extends React.Component<any, any> {
     render() {
-        UIStore.loadRoom()
-        const room = UIStore.currentRoom || null
-        console.log(room)
+        const room = RoomStore.rooms[0] || null
+
         return (
             room && <ChatRoom room={room} />
         )
