@@ -23,8 +23,7 @@ interface Props {
 class GroupListing extends React.Component<Props, {}> {
     render() {
         const groups = this.props.groups
-        console.log(groups)
-        console.log(groups.length && groups[0].description)
+
         return (
             <div className="groups-listing">
                 <Typography align="center" variant="display2">
