@@ -15,6 +15,7 @@ export default {
                     groups {
                         _id
                         name
+                        description
                         rooms {
                             _id
                             name

@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { inject, observer } from "mobx-react";
 import Group from 'models/Group'
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 import './styles/GroupListing.scss'
 
 @inject("GroupStore")
@@ -20,15 +23,29 @@ class GroupListing extends React.Component<Props, {}> {
     render() {
         const groups = this.props.groups
         console.log(groups)
+        console.log(groups.length && groups[0].description)
         return (
-            <ul className="groups-listing">
+            <div className="groups-listing">
+                <Typography align="center" variant="display2">
+                    Groups
+                </Typography>
+                
+                <div className="groups">
                 {groups.map((group, i) => (
-                    <li key={i}>
-                        <h3>{group.name}</h3>
-                        <p>{group.description}</p>
-                    </li>
+                    <Card key={i} className="group-item">
+                        <CardContent>
+                            <Typography variant="title">
+                                {group.name}
+                            </Typography>
+                            
+                            <Typography variant="body1">
+                                {group.description}
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 ))}
-            </ul>
+                </div>
+            </div>
         )
     }
 }
