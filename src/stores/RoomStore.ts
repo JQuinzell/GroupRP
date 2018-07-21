@@ -11,7 +11,7 @@ class RoomStore {
 
     create = (attrs: any) => {
         const room = new Room(attrs)
-        this.data.set(room.id, room)
+        this.data.set(room._id, room)
         return room
     }
 }

@@ -2,7 +2,7 @@ import {observable} from 'mobx'
 import Message from './Message'
 
 export default class Room {
-    id: string
+    _id: string
     @observable name: string
     messages: Message[] = []
 
