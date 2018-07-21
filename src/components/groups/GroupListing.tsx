@@ -5,7 +5,6 @@ import Group from 'models/Group'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import './styles/GroupListing.scss'
 
 @inject("GroupStore")
 @observer
@@ -25,14 +24,14 @@ class GroupListing extends React.Component<Props, {}> {
         const groups = this.props.groups
 
         return (
-            <div className="groups-listing">
+            <div className="card-listing">
                 <Typography align="center" variant="display2">
                     Groups
                 </Typography>
                 
-                <div className="groups">
+                <div className="cards">
                 {groups.map((group, i) => (
-                    <Card key={i} className="group-item">
+                    <Card key={i} className="card">
                         <CardContent>
                             <Typography variant="title">
                                 <Link to={`/groups/${group._id}/rooms`}>{group.name}</Link>

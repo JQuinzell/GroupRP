@@ -6,6 +6,7 @@ import GroupStore from 'stores/GroupStore'
 import RoomStore from 'stores/RoomStore'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Routes from './routes'
+import 'components/global/styles/CardListing.scss'
 
 initializeStores()
 
