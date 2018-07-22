@@ -9,16 +9,15 @@ import Routes from './routes'
 import 'components/global/styles/CardListing.scss'
 
 initializeStores()
-.then(() => {
-    ReactDOM.render(
-        <Provider
-            GroupStore={GroupStore}
-            RoomStore={RoomStore}>
-            <React.Fragment>
-                <CssBaseline />
-                <Routes />
-            </React.Fragment>
-        </Provider>,
-        document.getElementById('app')
-    )
-})
+
+ReactDOM.render(
+    <Provider
+        GroupStore={GroupStore}
+        RoomStore={RoomStore}>
+        <React.Fragment>
+            <CssBaseline />
+            <Routes />
+        </React.Fragment>
+    </Provider>,
+    document.getElementById('app')
+)
