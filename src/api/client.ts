@@ -25,6 +25,25 @@ export default {
                 `
             })
             .then(resp => resp.data['groups'])
+        },
+
+        get(id: string): Promise<Group> {
+            return client.query({
+                query: gql`
+                {
+                    group(id: "${id}") {
+                        _id
+                        name
+                        description
+                        rooms {
+                            _id
+                            name
+                        }
+                    }
+                }
+                `
+            })
+            .then(resp => resp.data['group'])
         }
     }
 }
