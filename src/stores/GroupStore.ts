@@ -21,7 +21,7 @@ class GroupStore {
         return group
     }
 
-    loadGroups() {
+    loadGroups = () => {
         return client.groups.all()
             .then(groups => {
                 return groups.map(this.create)
