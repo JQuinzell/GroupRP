@@ -9,10 +9,21 @@ import Typography from '@material-ui/core/Typography';
 @inject("GroupStore")
 @observer
 export default class RoomListingWrapper extends React.Component<any, any> {
+    state = {
+        rooms: []
+    }
+
+    componentWillMount() {
+        const id = this.props.match.params.id
+        const { GroupStore } = this.props
+        GroupStore.fetch(id)
+            .then(group => this.setState({
+                rooms: group.rooms
+            }))
+    }
+
     render() {
-        const groupID = this.props.match.params.id
-        const rooms = this.props.GroupStore.get(groupID).rooms
-        return <RoomListing rooms={rooms} />
+        return <RoomListing rooms={this.state.rooms} />
     }
 }
 
