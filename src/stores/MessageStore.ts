@@ -9,7 +9,7 @@ class MessageStore {
         const message = new Message(attrs)
         this.data.set(message.id, message)
         message.room = room
-        room.messages.push(message)
+        room.posts.push(message)
         return message
     }
 }
