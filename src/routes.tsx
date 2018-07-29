@@ -9,8 +9,8 @@ export default () => {
         <Router>
             <div>
                 <Route exact path="/" component={GroupListing} />
-                <Route path="/groups/:id/rooms" component={ChatListing} />
-                <Route path="/groups/:group/rooms/:room" component={ChatRoom} />
+                <Route exact path="/groups/:id/rooms" component={ChatListing} />
+                <Route exact path="/groups/:group/rooms/:room" component={ChatRoom} />
             </div>
         </Router>
     )
