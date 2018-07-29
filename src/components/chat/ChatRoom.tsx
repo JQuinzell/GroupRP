@@ -2,7 +2,7 @@ import * as React from 'react'
 import './styles/ChatRoom.scss'
 import Room from 'models/Room'
 import Message from 'models/Message'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import RoomStore from 'stores/RoomStore'
 
 interface Props {
@@ -13,11 +13,29 @@ interface State {
     selectedRoom: Room
 }
 
+@inject('GroupStore')
 @observer
 export default class ChatRoomWrapper extends React.Component<any, any> {
-    render() {
-        const room = RoomStore.rooms[0] || null
+    state = {
+        room: null
+    }
 
+    componentWillMount() {
+        const {GroupStore} = this.props
+        const groupID = this.props.match.params.group
+        const roomID = this.props.match.params.room
+
+        GroupStore.fetch(groupID)
+            .then(group => group.getRoom(roomID))
+            .then(room => {
+                room.loadPosts()
+                this.setState({ room })
+            })
+            .catch(console.log)
+    }
+
+    render() {
+        const room = this.state.room
         return (
             room && <ChatRoom room={room} />
         )
@@ -28,8 +46,8 @@ export default class ChatRoomWrapper extends React.Component<any, any> {
 export class ChatRoom extends React.Component<any, {}> {
 
     render() {
-        let messages = this.props.room.messages
-
+        let messages = this.props.room.posts
+        console.log('messages', messages)
         return (
         <div className="chatbox">
             <div className="title">

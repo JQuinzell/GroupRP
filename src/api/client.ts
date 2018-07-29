@@ -45,5 +45,20 @@ export default {
             })
             .then(resp => resp.data['group'])
         }
+    },
+    posts: {
+        all(id: string) {
+            return client.query({
+                query: gql`
+                {
+                    posts(room: "${id}") {
+                        _id
+                        body
+                    }
+                }
+                `
+            })
+                .then(resp => resp.data['posts'])
+        }
     }
 }

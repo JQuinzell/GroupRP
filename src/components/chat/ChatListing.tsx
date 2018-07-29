@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { inject, observer } from "mobx-react";
 import { Link } from 'react-router-dom'
+import Group from 'models/Group'
 import Room from 'models/Room'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 @observer
 export default class RoomListingWrapper extends React.Component<any, any> {
     state = {
+        group: null,
         rooms: []
     }
 
@@ -18,24 +20,25 @@ export default class RoomListingWrapper extends React.Component<any, any> {
         const { GroupStore } = this.props
         GroupStore.fetch(id)
             .then(group => this.setState({
-                rooms: group.rooms
+                group,
+                rooms: group.rooms,
             }))
     }
 
     render() {
-        return <RoomListing rooms={this.state.rooms} />
+        return this.state.group && <RoomListing group={this.state.group} rooms={this.state.rooms} />
     }
 }
 
 interface Props {
+    group: Group
     rooms: Room[]
 }
 
 @observer
 class RoomListing extends React.Component<Props, {}> {
     render() {
-        const rooms = this.props.rooms
-
+        const {rooms, group} = this.props
         return (
             <div className="card-listing">
                 <Typography align="center" variant="display2">
@@ -47,7 +50,7 @@ class RoomListing extends React.Component<Props, {}> {
                         <Card key={i} className="card">
                             <CardContent>
                                 <Typography variant="title">
-                                    <Link to={`/chat/${room._id}`}>{room.name}</Link>
+                                    <Link to={`/groups/${group._id}/rooms/${room._id}`}>{room.name}</Link>
                                 </Typography>
                             </CardContent>
                         </Card>

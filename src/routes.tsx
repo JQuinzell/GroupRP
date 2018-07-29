@@ -10,7 +10,7 @@ export default () => {
             <div>
                 <Route exact path="/" component={GroupListing} />
                 <Route path="/groups/:id/rooms" component={ChatListing} />
-                <Route path="/chat/:id" component={ChatRoom} />
+                <Route path="/groups/:group/rooms/:room" component={ChatRoom} />
             </div>
         </Router>
     )

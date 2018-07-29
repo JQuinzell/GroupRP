@@ -31,7 +31,7 @@ class GroupStore {
     create = (attrs: any) => {
         const group = new Group(attrs)
         this.data.set(group._id, group)
-        group.rooms.forEach(RoomStore.create)
+        group.rooms = group.rooms.map(RoomStore.create)
         return group
     }
 

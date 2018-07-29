@@ -11,4 +11,8 @@ export default class Group {
     {
         Object.assign(this, attrs)
     }
+
+    getRoom(id: string): Room {
+        return this.rooms.find(room => room._id === id)
+    }
 }
