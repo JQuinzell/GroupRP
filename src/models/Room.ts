@@ -5,7 +5,7 @@ import client from 'api/client'
 export default class Room {
     _id: string
     @observable name: string
-    posts: Message[] = []
+    @observable posts: Message[] = []
 
     constructor(attrs: any) {
         Object.assign(this, attrs)

@@ -47,7 +47,7 @@ export class ChatRoom extends React.Component<any, {}> {
 
     render() {
         let messages = this.props.room.posts
-        console.log('messages', messages)
+
         return (
         <div className="chatbox">
             <div className="title">
