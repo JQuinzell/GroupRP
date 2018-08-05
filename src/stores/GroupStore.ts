@@ -38,7 +38,12 @@ class GroupStore {
     loadGroups = () => {
         return client.groups.all()
             .then(groups => {
-                return groups.map(this.create)
+                return groups.map(attrs => {
+                    const group = new Group(attrs)
+                    this.data.set(group._id, group)
+                    group.rooms = group.rooms.map(RoomStore.create)
+                    return group
+                })
             })
     }
 }
