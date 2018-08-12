@@ -12,7 +12,6 @@ interface Props {
     rooms: Room[]
 }
 
-@observer
 export default class RoomListing extends React.Component<Props, {}> {
     render() {
         const {rooms, group} = this.props
