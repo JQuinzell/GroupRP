@@ -2,7 +2,7 @@ import ApolloClient from 'apollo-boost'
 import gql from 'graphql-tag'
 import Group from 'models/Group'
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
     uri: 'http://localhost:3000/graphql'
 })
 

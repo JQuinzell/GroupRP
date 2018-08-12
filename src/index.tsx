@@ -6,18 +6,23 @@ import GroupStore from 'stores/GroupStore'
 import RoomStore from 'stores/RoomStore'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Routes from './routes'
+import {client} from 'api/client'
+import { ApolloProvider } from 'react-apollo'
+
 import 'components/global/styles/CardListing.scss'
 
 initializeStores()
 
 ReactDOM.render(
-    <Provider
-        GroupStore={GroupStore}
-        RoomStore={RoomStore}>
-        <React.Fragment>
-            <CssBaseline />
-            <Routes />
-        </React.Fragment>
-    </Provider>,
+    <ApolloProvider client={client}>
+        <Provider
+            GroupStore={GroupStore}
+            RoomStore={RoomStore}>
+            <React.Fragment>
+                <CssBaseline />
+                <Routes />
+            </React.Fragment>
+        </Provider>
+    </ApolloProvider>,
     document.getElementById('app')
 )
