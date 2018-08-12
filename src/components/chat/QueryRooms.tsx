@@ -26,7 +26,7 @@ query($id: String!){
 `
 
 //TODO: figure out how to properly type
-const QueryRoom: React.SFC<any> = ({match}) => (
+const QueryRooms: React.SFC<any> = ({match}) => (
     <Query query={query} variables={{id: match.params.id}}>
         {({loading, data, error}) => {
             if(loading || error) {
@@ -36,4 +36,4 @@ const QueryRoom: React.SFC<any> = ({match}) => (
         }}
     </Query>
 )
-export default QueryRoom
+export default QueryRooms
