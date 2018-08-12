@@ -1,25 +1,15 @@
 import * as React from 'react'
-import { inject, observer } from "mobx-react";
 import {Link} from 'react-router-dom'
 import Group from 'models/Group'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-@inject("GroupStore")
-@observer
-export default class GroupListingWrapper extends React.Component<any, any> {
-    render() {
-        return <GroupListing groups={this.props.GroupStore.groups} />
-    }
-}
-
 interface Props {
     groups: Group[]
 }
 
-@observer
-class GroupListing extends React.Component<Props, {}> {
+export default class GroupListing extends React.Component<Props, {}> {
     render() {
         const groups = this.props.groups
 
