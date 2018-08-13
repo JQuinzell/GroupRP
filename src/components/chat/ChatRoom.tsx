@@ -1,7 +1,15 @@
 import * as React from 'react'
 import './styles/ChatRoom.scss'
 
-export default class ChatRoom extends React.Component<any, {}> {
+interface Props {
+    room: {
+        posts: Array<{
+            // username: string
+            body: string
+        }>
+    }
+}
+export default class ChatRoom extends React.Component<Props, {}> {
 
     render() {
         let messages = this.props.room.posts
@@ -15,7 +23,7 @@ export default class ChatRoom extends React.Component<any, {}> {
                 {messages.map((message: any, i: number) => (
                     <div key={i} className="message">
                         <img className="avatar" src="avatar.jpg" alt="Avatar" />
-                        <h3>{message.username}</h3>:
+                        <h3>Username</h3>:
                         <p>{message.body}</p>
                     </div>
                 ))}

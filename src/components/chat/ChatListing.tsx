@@ -8,8 +8,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 interface Props {
-    group: Group
-    rooms: Room[]
+    group: {
+        _id: string
+    }
+
+    rooms: Array<{
+        _id: string
+        name: string
+    }>
 }
 
 export default class RoomListing extends React.Component<Props, {}> {

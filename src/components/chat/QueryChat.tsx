@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import ChatRoom from './ChatRoom'
 
 interface MatchParams {
-    id: string
+    room: string
 }
 
 interface Props extends RouteComponentProps<MatchParams> {
@@ -24,15 +24,29 @@ query($id: String!){
 }
 `
 
-//TODO: figure out how to properly type
-const QueryChat: React.SFC<any> = ({ match }) => (
-    <Query query={query} variables={{ id: match.params.room }}>
+interface Data {
+    room: {
+        _id: string
+        name: string
+        posts: Array<{ _id: string, body: string}>
+    }
+}
+
+interface Variables {
+    id: string
+}
+
+class QueryChatComponent extends Query<Data, Variables> {}
+
+const QueryChat: React.SFC<Props> = ({ match }) => (
+    <QueryChatComponent query={query} variables={{ id: match.params.room }}>
         {({ loading, data, error }) => {
             if (loading || error) {
                 return null
             }
             return <ChatRoom room={data.room} />
         }}
-    </Query>
+    </QueryChatComponent>
 )
+
 export default QueryChat

@@ -13,15 +13,24 @@ query {
 }
 `
 
+interface Data {
+    groups: Array<{
+        _id: string
+        name: string
+        description: string
+    }>
+}
+class QueryRoomsComponent extends Query<Data, {}> {}
+
 //TODO: figure out how to properly type
 const QueryRooms: React.SFC<{}> = () => (
-    <Query query={query}>
+    <QueryRoomsComponent query={query}>
         {({ loading, data, error }) => {
             if (loading || error) {
                 return null
             }
             return <GroupListing groups={data.groups} />
         }}
-    </Query>
+    </QueryRoomsComponent>
 )
 export default QueryRooms

@@ -4,11 +4,7 @@ import gql from 'graphql-tag'
 import ChatListing from './ChatListing'
 import { RouteComponentProps } from 'react-router-dom'
 
-interface MatchParams {
-    id: string
-}
-
-interface Props extends RouteComponentProps<MatchParams> {    
+interface Props extends RouteComponentProps<{id: string}> {    
 }
 
 const query = gql`
@@ -25,15 +21,30 @@ query($id: String!){
 }
 `
 
+interface Data {
+    group: {
+        _id: string
+        name: string
+        description: string
+        rooms: Array<{ _id: string, name: string }>
+    }
+}
+
+interface Variables {
+    id: string
+}
+
+class QueryRoomsComponent extends Query<Data, Variables> {} 
+
 //TODO: figure out how to properly type
-const QueryRooms: React.SFC<any> = ({match}) => (
-    <Query query={query} variables={{id: match.params.id}}>
+const QueryRooms: React.SFC<Props> = ({match}) => (
+    <QueryRoomsComponent query={query} variables={{id: match.params.id}}>
         {({loading, data, error}) => {
             if(loading || error) {
                 return null
             }
             return <ChatListing group={data.group} rooms={data.group.rooms} />
         }}
-    </Query>
+    </QueryRoomsComponent>
 )
 export default QueryRooms

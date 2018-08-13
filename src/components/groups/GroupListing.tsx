@@ -6,7 +6,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 interface Props {
-    groups: Group[]
+    groups: Array<{
+        _id: string
+        name: string
+        description: string
+    }>
 }
 
 export default class GroupListing extends React.Component<Props, {}> {
