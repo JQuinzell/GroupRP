@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Query } from 'react-apollo'
+import { Query, Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { RouteComponentProps } from 'react-router-dom'
 import ChatRoom from './ChatRoom'
@@ -24,7 +24,24 @@ query($id: String!){
 }
 `
 
-interface Data {
+const mutation = gql`
+mutation($body: String!, $room: String!) {
+    post(input: { body: $body, room: $room}) {
+        _id
+    }
+}
+`
+
+interface MutationData {
+    _id: string
+}
+
+interface MutationVariables {
+    body: string
+    room: string
+}
+
+interface QueryData {
     room: {
         _id: string
         name: string
@@ -32,21 +49,29 @@ interface Data {
     }
 }
 
-interface Variables {
+interface QueryVariables {
     id: string
 }
 
-class QueryChatComponent extends Query<Data, Variables> {}
+
+class QueryChatComponent extends Query<QueryData, QueryVariables> {}
+class MutationChatComponent extends Mutation<MutationData, MutationVariables> {}
 
 const QueryChat: React.SFC<Props> = ({ match }) => (
-    <QueryChatComponent query={query} variables={{ id: match.params.room }}>
-        {({ loading, data, error }) => {
-            if (loading || error) {
-                return null
-            }
-            return <ChatRoom room={data.room} />
-        }}
-    </QueryChatComponent>
+    <MutationChatComponent mutation={mutation}>
+        {(sendMessage) => (
+            <QueryChatComponent query={query} variables={{ id: match.params.room }}>
+                {({ loading, data, error }) => {
+                    if (loading || error) {
+                        return null
+                    }
+                    return <ChatRoom 
+                        room={data.room} 
+                        sendMessage={(body, room) => { sendMessage({variables: {body, room}})}} />
+                }}
+            </QueryChatComponent>
+        )}
+    </MutationChatComponent>
 )
 
 export default QueryChat
