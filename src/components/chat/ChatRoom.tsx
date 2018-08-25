@@ -23,6 +23,8 @@ export default class ChatRoom extends React.Component<Props, State> {
         message: ''
     }
 
+    chatboxRef = React.createRef<HTMLDivElement>()
+
     handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if(e.key === 'Enter') {
             e.preventDefault()
@@ -42,9 +44,18 @@ export default class ChatRoom extends React.Component<Props, State> {
         this.props.sendMessage(message, this.props.room._id)
     }
 
-    moveScrollBarToBottom = (div: HTMLDivElement) => {
-        //don't know if this will account for messages appearing in scroll box
-        div.scrollTop = div.scrollHeight
+    moveScrollBarToBottom = () => {
+        this.chatboxRef.current.scrollTop = this.chatboxRef.current.scrollHeight
+    }
+
+    componentDidMount() {
+        this.moveScrollBarToBottom()
+    }
+
+    componentDidUpdate(prevProps: Props) {
+        if(prevProps.posts.length < this.props.posts.length) {
+            this.moveScrollBarToBottom()
+        }
     }
 
     render() {
@@ -53,7 +64,7 @@ export default class ChatRoom extends React.Component<Props, State> {
             <div className="title">
                 <h1>Title</h1>
             </div>
-            <div ref={this.moveScrollBarToBottom} className="messages">
+            <div ref={this.chatboxRef} className="messages">
                 {this.props.posts.map((message: any, i: number) => (
                     <div key={i} className="message">
                         <img className="avatar" src="avatar.jpg" alt="Avatar" />
