@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { Query, Mutation } from 'react-apollo'
+import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { RouteComponentProps } from 'react-router-dom'
 import ChatRoom from './ChatRoom'
+import ChatSocket from './ChatSocket'
 
 interface MatchParams {
     room: string
@@ -55,11 +56,10 @@ interface QueryVariables {
 
 
 class QueryChatComponent extends Query<QueryData, QueryVariables> {}
-class MutationChatComponent extends Mutation<MutationData, MutationVariables> {}
 
 const QueryChat: React.SFC<Props> = ({ match }) => (
-    <MutationChatComponent mutation={mutation}>
-        {(sendMessage) => (
+    <ChatSocket joinedRoomIDs={['1']}>
+        {(sendMessage, messages) => (
             <QueryChatComponent query={query} variables={{ id: match.params.room }}>
                 {({ loading, data, error }) => {
                     if (loading || error) {
@@ -67,11 +67,12 @@ const QueryChat: React.SFC<Props> = ({ match }) => (
                     }
                     return <ChatRoom 
                         room={data.room} 
-                        sendMessage={(body, room) => { sendMessage({variables: {body, room}})}} />
+                        posts={[...data.room.posts, ...messages]}
+                        sendMessage={(msg, room) => sendMessage(msg, '1')} />
                 }}
             </QueryChatComponent>
         )}
-    </MutationChatComponent>
+    </ChatSocket>
 )
 
 export default QueryChat

@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import Group from 'models/Group'
 
 export const client = new ApolloClient({
-    uri: 'http://localhost:3000/graphql'
+    uri: 'http://localhost:4000/graphql'
 })
 
 export default {

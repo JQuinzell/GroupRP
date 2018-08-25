@@ -4,11 +4,12 @@ import './styles/ChatRoom.scss'
 interface Props {
     room: {
         _id: string
-        posts: Array<{
-            // username: string
-            body: string
-        }>
     }
+
+    posts: Array<{
+        // username: string
+        body: string
+    }>
 
     sendMessage: (message: string, roomID: string) => void
 }
@@ -47,15 +48,13 @@ export default class ChatRoom extends React.Component<Props, State> {
     }
 
     render() {
-        let messages = this.props.room.posts
-
         return (
         <div className="chatbox">
             <div className="title">
                 <h1>Title</h1>
             </div>
             <div ref={this.moveScrollBarToBottom} className="messages">
-                {messages.map((message: any, i: number) => (
+                {this.props.posts.map((message: any, i: number) => (
                     <div key={i} className="message">
                         <img className="avatar" src="avatar.jpg" alt="Avatar" />
                         <h3>Username</h3>:
