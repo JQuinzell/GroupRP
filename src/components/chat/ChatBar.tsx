@@ -1,17 +1,15 @@
 import * as React from 'react'
+import Post from 'data/post'
 import './styles/ChatBar.scss'
 
-interface Message {
-    body: string
-    username: string
+interface Tabs {
+    [name: string]: Post[]
 }
 
-type TabName = string
-
 interface Props {
-    tabs: Map<TabName, Message[]>
-    selectedTab: TabName
-    selectTab: (tab: TabName) => void
+    tabs: Tabs
+    selectedTab: string
+    selectTab: (tab: string) => void
     sendMessage: (message: string) => void
 }
 
@@ -58,8 +56,8 @@ export default class ChatBar extends React.Component<Props, State> {
     }
 
     render() {
-        const tabs = Array.from(this.props.tabs.keys())
-        const selectedMessages = this.props.tabs.get(this.props.selectedTab) || []
+        const tabs = Object.keys(this.props.tabs)
+        const selectedMessages = this.props.tabs[this.props.selectedTab] || []
 
         return (
             <div className="ChatBar">
