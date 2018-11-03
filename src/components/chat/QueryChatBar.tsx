@@ -54,7 +54,6 @@ const QueryChatBar: React.SFC<Props> = () => (
     <ChatSocket joinedRoomIDs={[room]}>
         {(sendMessage, messages) => {
             console.log('Testing chat socket')
-            sendMessage('Testing once again', room)
             return <h1>hello</h1>
         }}
     </ChatSocket>
