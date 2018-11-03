@@ -61,6 +61,10 @@ export default class ChatSocket extends React.Component<Props, State> {
         const message = JSON.parse(data.data)
         const rooms = this.state.rooms
         const i = this.state.rooms.findIndex(room => room._id === message.roomID)
+        if (i === -1) {
+            console.error('Room not found')
+            return
+        }
         const newRoom = Object.assign({}, rooms[i], { posts: [...rooms[i].posts, message.post] })
         rooms.splice(i, 1, newRoom)
         this.setState({
