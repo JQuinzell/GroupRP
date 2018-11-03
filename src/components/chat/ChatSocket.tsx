@@ -36,6 +36,12 @@ export default class ChatSocket extends React.Component<Props, State> {
         this.socket.onerror = this.onSocketError
         this.socket.onopen = () => {
             this.props.joinedRoomIDs.forEach(id => {
+                const room = {
+                    _id: id,
+                    name: '',
+                    posts: []
+                }
+                this.setState({ rooms: [...this.state.rooms, room] })
                 this.socket.send(
                     JSON.stringify({
                         action: 'JOIN_ROOM',
