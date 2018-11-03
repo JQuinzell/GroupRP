@@ -1,15 +1,10 @@
 import * as React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import { RouteComponentProps } from 'react-router-dom'
 import ChatRoom from './ChatRoom'
 import ChatSocket from './ChatSocket'
 
-interface MatchParams {
-    room: string
-}
-
-interface Props extends RouteComponentProps<MatchParams> {}
+interface Props {}
 
 const query = gql`
     query($id: String!) {
@@ -54,24 +49,15 @@ interface QueryVariables {
 }
 
 class QueryChatComponent extends Query<QueryData, QueryVariables> {}
-
-const QueryChat: React.SFC<Props> = ({ match }) => (
-    <ChatSocket joinedRoomIDs={['1']}>
-        {(sendMessage, messages) => (
-            <QueryChatComponent query={query} variables={{ id: match.params.room }}>
-                {({ loading, data, error }) => {
-                    if (loading || error) {
-                        return null
-                    }
-                    return null
-                    // return <ChatRoom
-                    //     room={data.room}
-                    //     posts={[...data.room.posts, ...messages]}
-                    //     sendMessage={(msg, room) => sendMessage(msg, '1')} />
-                }}
-            </QueryChatComponent>
-        )}
+const room = '5b4fc986339b513b5466dfda'
+const QueryChatBar: React.SFC<Props> = () => (
+    <ChatSocket joinedRoomIDs={[room]}>
+        {(sendMessage, messages) => {
+            console.log('Testing chat socket')
+            sendMessage('Testing once again', room)
+            return <h1>hello</h1>
+        }}
     </ChatSocket>
 )
 
-export default QueryChat
+export default QueryChatBar

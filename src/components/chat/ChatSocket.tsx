@@ -2,37 +2,48 @@ import * as React from 'react'
 
 type SendMessage = (message: string, roomID: string) => void
 
-interface Message {
+interface Room {
+    name: string
+    _id: string
+    posts: Post[]
+}
+interface Post {
+    _id: string
     body: string
 }
 
 interface Props {
     joinedRoomIDs: string[]
-    children: (sendMessage: SendMessage, messages: Message[]) => React.ReactNode
+    children: (sendMessage: SendMessage, messages: Room[]) => React.ReactNode
 }
 
 interface State {
-    messages: Message[]
+    rooms: Room[]
+    ready: boolean
 }
 
 export default class ChatSocket extends React.Component<Props, State> {
     socket: WebSocket = null
-    
+
     state = {
-        messages: []
+        rooms: [] as Room[],
+        ready: false
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.socket = new WebSocket('ws://localhost:5000')
         this.socket.onmessage = this.onSocketMessage
         this.socket.onerror = this.onSocketError
         this.socket.onopen = () => {
             this.props.joinedRoomIDs.forEach(id => {
-                this.socket.send(JSON.stringify({
-                    action: 'JOIN_ROOM',
-                    roomID: id
-                }))
+                this.socket.send(
+                    JSON.stringify({
+                        action: 'JOIN_ROOM',
+                        roomID: id
+                    })
+                )
             })
+            this.setState({ ready: true })
         }
     }
 
@@ -42,24 +53,32 @@ export default class ChatSocket extends React.Component<Props, State> {
 
     onSocketMessage = (data: MessageEvent) => {
         const message = JSON.parse(data.data)
+        const rooms = this.state.rooms
+        const i = this.state.rooms.findIndex(room => room._id === message.roomID)
+        const newRoom = Object.assign({}, rooms[i], { posts: [...rooms[i].posts, message.post] })
+        rooms.splice(i, 1, newRoom)
         this.setState({
-            messages: [...this.state.messages, message]
+            rooms: [...rooms]
         })
     }
 
-    onSocketError(error: Event) {
-        console.log(error)
-    }
+    onSocketError(error: Event) {}
 
     sendMessage = (message: string, roomID: string) => {
-        this.socket.send(JSON.stringify({
-            action: 'SEND_MESSAGE',
-            message,
-            roomID
-        }))
+        this.socket.send(
+            JSON.stringify({
+                action: 'SEND_MESSAGE',
+                message,
+                roomID
+            })
+        )
     }
 
     render() {
-        return this.props.children(this.sendMessage, this.state.messages)
+        if (this.state.ready) {
+            return this.props.children(this.sendMessage, this.state.rooms)
+        } else {
+            return null
+        }
     }
 }
