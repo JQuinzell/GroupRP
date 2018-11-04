@@ -3,8 +3,9 @@ import Post from 'data/post'
 import './styles/ChatBar.scss'
 
 interface Room {
+    _id: string
     name: string
-    posts: Post[]
+    posts: Array<{ _id: string; body: string }>
 }
 
 interface Props {
@@ -57,7 +58,7 @@ export default class ChatBar extends React.Component<Props, State> {
     }
 
     render() {
-        const selectedRoom = this.props.rooms.find(room => room.name === this.props.selectedRoom)
+        const selectedRoom = this.props.rooms.find(room => room._id === this.props.selectedRoom)
 
         return (
             <div className="ChatBar">
@@ -75,7 +76,7 @@ export default class ChatBar extends React.Component<Props, State> {
                 <div ref={this.chatboxRef} className="messages">
                     {selectedRoom.posts.map(post => (
                         <div key={post._id} className="message">
-                            <span className="username">{post.username}:</span>
+                            <span className="username">username:</span>
                             {post.body}
                         </div>
                     ))}
