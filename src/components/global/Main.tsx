@@ -2,11 +2,15 @@ import * as React from 'react'
 import Drawer from '@material-ui/core/Drawer'
 import Person from '@material-ui/icons/Person'
 import Grid from '@material-ui/core/Grid'
-import { withStyles, createStyles, WithStyles, List, ListSubheader, ListItem } from '@material-ui/core'
+import { withStyles, createStyles, WithStyles, List, ListSubheader, ListItem, AppBar, Typography } from '@material-ui/core'
 
 const drawerWidth = 300
 
 const styles = createStyles({
+    content: {
+        width: `calc(100% - ${drawerWidth})`,
+        marginLeft: drawerWidth
+    },
     drawer: {
         width: drawerWidth,
         flexShrink: 0
@@ -55,6 +59,11 @@ class Main extends React.Component<Props, State> {
                         </Grid>
                     </Grid>
                 </Drawer>
+                <div className={classes.content}>
+                    <AppBar position="static">
+                        <Typography variant="h3">Hello</Typography>
+                    </AppBar>
+                </div>
             </React.Fragment>
         )
     }
