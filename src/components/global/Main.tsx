@@ -2,8 +2,10 @@ import * as React from 'react'
 import Chat from 'components/chat/Chat'
 import Drawer from '@material-ui/core/Drawer'
 import Person from '@material-ui/icons/Person'
+import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@material-ui/icons/ExpandMore'
 import Grid from '@material-ui/core/Grid'
-import { withStyles, createStyles, WithStyles, List, ListSubheader, ListItem, AppBar, Typography } from '@material-ui/core'
+import { withStyles, createStyles, WithStyles, List, ListSubheader, ListItem, AppBar, Typography, ListItemText, Collapse } from '@material-ui/core'
 import { Switch, Route } from 'react-router'
 
 const drawerWidth = 300
@@ -51,9 +53,21 @@ const styles = createStyles({
 })
 
 interface Props extends WithStyles<typeof styles> {}
-interface State {}
+interface State {
+    openJoinedGroups: boolean
+}
 
 class Main extends React.Component<Props, State> {
+    state = {
+        openJoinedGroups: true
+    }
+
+    toggleJoinedGroups = () => {
+        this.setState({
+            openJoinedGroups: !this.state.openJoinedGroups
+        })
+    }
+
     render() {
         const { classes } = this.props
 
@@ -65,12 +79,18 @@ class Main extends React.Component<Props, State> {
                             <Person className={classes.userIcon} />
                         </Grid>
                         <Grid item className={classes.lists}>
-                            <List subheader={<ListSubheader>Joined Groups</ListSubheader>}>
-                                {[1, 2, 3].map(i => (
-                                    <ListItem key={i} button>
-                                        Group {i}
-                                    </ListItem>
-                                ))}
+                            <List>
+                                <ListItem button onClick={this.toggleJoinedGroups}>
+                                    <ListItemText>Joined Groups</ListItemText>
+                                    {this.state.openJoinedGroups ? <ExpandLess /> : <ExpandMore />}
+                                </ListItem>
+                                <Collapse in={this.state.openJoinedGroups}>
+                                    {[1, 2, 3].map(i => (
+                                        <ListItem key={i} button>
+                                            <ListItemText inset>Group {i}</ListItemText>
+                                        </ListItem>
+                                    ))}
+                                </Collapse>
                             </List>
                         </Grid>
                     </Grid>
