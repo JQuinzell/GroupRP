@@ -1,9 +1,7 @@
 import * as React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Group from 'models/Group'
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import { List, ListItem, ListItemText } from '@material-ui/core'
 
 interface Props {
     groups: Array<{
@@ -18,27 +16,13 @@ export default class GroupListing extends React.Component<Props, {}> {
         const groups = this.props.groups
 
         return (
-            <div className="card-listing">
-                <Typography align="center" variant="display2">
-                    Groups
-                </Typography>
-                
-                <div className="cards">
-                {groups.map((group, i) => (
-                    <Card key={i} className="card">
-                        <CardContent>
-                            <Typography variant="title">
-                                <Link to={`/groups/${group._id}/rooms`}>{group.name}</Link>
-                            </Typography>
-                            
-                            <Typography variant="body1">
-                                {group.description}
-                            </Typography>
-                        </CardContent>
-                    </Card>
+            <List>
+                {groups.map(group => (
+                    <ListItem key={group._id} button>
+                        <ListItemText inset>{group.name}</ListItemText>
+                    </ListItem>
                 ))}
-                </div>
-            </div>
+            </List>
         )
     }
 }

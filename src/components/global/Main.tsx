@@ -7,6 +7,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import Grid from '@material-ui/core/Grid'
 import { withStyles, createStyles, WithStyles, List, ListSubheader, ListItem, AppBar, Typography, ListItemText, Collapse } from '@material-ui/core'
 import { Switch, Route } from 'react-router'
+import GroupListing from 'components/groups/QueryGroups'
 
 const drawerWidth = 300
 const appBarHeight = 75
@@ -85,11 +86,7 @@ class Main extends React.Component<Props, State> {
                                     {this.state.openJoinedGroups ? <ExpandLess /> : <ExpandMore />}
                                 </ListItem>
                                 <Collapse in={this.state.openJoinedGroups}>
-                                    {[1, 2, 3].map(i => (
-                                        <ListItem key={i} button>
-                                            <ListItemText inset>Group {i}</ListItemText>
-                                        </ListItem>
-                                    ))}
+                                    <GroupListing />
                                 </Collapse>
                             </List>
                         </Grid>
