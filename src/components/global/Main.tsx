@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import { withStyles, createStyles, WithStyles, List, ListSubheader, ListItem, AppBar, Typography, ListItemText, Collapse } from '@material-ui/core'
 import { Switch, Route } from 'react-router'
 import GroupListing from 'components/groups/QueryGroups'
+import RoomListing from 'components/rooms/QueryRooms'
 
 const drawerWidth = 300
 const appBarHeight = 75
@@ -56,18 +57,28 @@ const styles = createStyles({
 interface Props extends WithStyles<typeof styles> {}
 interface State {
     openJoinedGroups: boolean
+    openRoomSelect: boolean
     selectedGroupId: string
+    selectedRoomId: string
 }
 
 class Main extends React.Component<Props, State> {
     state = {
         openJoinedGroups: true,
-        selectedGroupId: null
+        openRoomSelect: true,
+        selectedGroupId: null,
+        selectedRoomId: null
     }
 
     toggleJoinedGroups = () => {
         this.setState({
             openJoinedGroups: !this.state.openJoinedGroups
+        })
+    }
+
+    toggleRoomSelect = () => {
+        this.setState({
+            openRoomSelect: !this.state.openRoomSelect
         })
     }
 
@@ -77,14 +88,20 @@ class Main extends React.Component<Props, State> {
         })
     }
 
+    selectRoom = (id: string) => {
+        this.setState({
+            selectedRoomId: id
+        })
+    }
+
     render() {
         const { classes } = this.props
 
         return (
             <React.Fragment>
                 <Drawer className={classes.drawer} classes={{ paper: classes.drawerPaper }} variant="permanent">
-                    <Grid container alignItems="center" direction="column" className={classes.container}>
-                        <Grid className={classes.userIconCell} item>
+                    <Grid container alignItems="center" direction="column" wrap="nowrap" className={classes.container}>
+                        <Grid item className={classes.userIconCell}>
                             <Person className={classes.userIcon} />
                         </Grid>
                         <Grid item className={classes.lists}>
@@ -95,6 +112,13 @@ class Main extends React.Component<Props, State> {
                                 </ListItem>
                                 <Collapse in={this.state.openJoinedGroups}>
                                     <GroupListing onGroupSelected={this.selectGroup} />
+                                </Collapse>
+                                <ListItem button onClick={this.toggleRoomSelect}>
+                                    <ListItemText>Rooms</ListItemText>
+                                    {this.state.openRoomSelect ? <ExpandLess /> : <ExpandMore />}
+                                </ListItem>
+                                <Collapse in={this.state.openRoomSelect}>
+                                    <RoomListing groupId={this.state.selectedGroupId} onRoomSelected={this.selectRoom} />
                                 </Collapse>
                             </List>
                         </Grid>
