@@ -56,16 +56,24 @@ const styles = createStyles({
 interface Props extends WithStyles<typeof styles> {}
 interface State {
     openJoinedGroups: boolean
+    selectedGroupId: string
 }
 
 class Main extends React.Component<Props, State> {
     state = {
-        openJoinedGroups: true
+        openJoinedGroups: true,
+        selectedGroupId: null
     }
 
     toggleJoinedGroups = () => {
         this.setState({
             openJoinedGroups: !this.state.openJoinedGroups
+        })
+    }
+
+    selectGroup = (id: string) => {
+        this.setState({
+            selectedGroupId: id
         })
     }
 
@@ -86,7 +94,7 @@ class Main extends React.Component<Props, State> {
                                     {this.state.openJoinedGroups ? <ExpandLess /> : <ExpandMore />}
                                 </ListItem>
                                 <Collapse in={this.state.openJoinedGroups}>
-                                    <GroupListing />
+                                    <GroupListing onGroupSelected={this.selectGroup} />
                                 </Collapse>
                             </List>
                         </Grid>

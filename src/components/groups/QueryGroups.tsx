@@ -4,13 +4,13 @@ import gql from 'graphql-tag'
 import GroupListing from './GroupListing'
 
 const query = gql`
-query {
-    groups {
-        _id
-        name
-        description
+    query {
+        groups {
+            _id
+            name
+            description
+        }
     }
-}
 `
 
 interface Data {
@@ -22,14 +22,17 @@ interface Data {
 }
 class QueryRoomsComponent extends Query<Data, {}> {}
 
-//TODO: figure out how to properly type
-const QueryRooms: React.SFC<{}> = () => (
+interface Props {
+    onGroupSelected: (id: string) => void
+}
+
+const QueryRooms: React.SFC<Props> = ({ onGroupSelected }) => (
     <QueryRoomsComponent query={query}>
         {({ loading, data, error }) => {
             if (loading || error) {
                 return null
             }
-            return <GroupListing groups={data.groups} />
+            return <GroupListing onGroupSelected={onGroupSelected} groups={data.groups} />
         }}
     </QueryRoomsComponent>
 )

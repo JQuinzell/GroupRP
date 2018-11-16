@@ -9,6 +9,7 @@ interface Props {
         name: string
         description: string
     }>
+    onGroupSelected: (id: string) => void
 }
 
 export default class GroupListing extends React.Component<Props, {}> {
@@ -18,7 +19,7 @@ export default class GroupListing extends React.Component<Props, {}> {
         return (
             <List>
                 {groups.map(group => (
-                    <ListItem key={group._id} button>
+                    <ListItem key={group._id} button onClick={() => this.props.onGroupSelected(group._id)}>
                         <ListItemText inset>{group.name}</ListItemText>
                     </ListItem>
                 ))}
