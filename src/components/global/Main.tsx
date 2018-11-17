@@ -1,5 +1,6 @@
 import * as React from 'react'
-import Chat from 'components/chat/Chat'
+import { withApollo, WithApolloClient } from 'react-apollo'
+import QueryChat from 'components/chat/QueryChat'
 import Drawer from '@material-ui/core/Drawer'
 import Person from '@material-ui/icons/Person'
 import ExpandLess from '@material-ui/icons/ExpandLess'
@@ -9,6 +10,7 @@ import { withStyles, createStyles, WithStyles, List, ListSubheader, ListItem, Ap
 import { Switch, Route } from 'react-router'
 import GroupListing from 'components/groups/QueryGroups'
 import RoomListing from 'components/rooms/QueryRooms'
+import { client } from 'api/client'
 
 const drawerWidth = 300
 const appBarHeight = 75
@@ -54,7 +56,8 @@ const styles = createStyles({
     }
 })
 
-interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithApolloClient<WithStyles<typeof styles>> {}
+
 interface State {
     openJoinedGroups: boolean
     openRoomSelect: boolean
@@ -89,9 +92,7 @@ class Main extends React.Component<Props, State> {
     }
 
     selectRoom = (id: string) => {
-        this.setState({
-            selectedRoomId: id
-        })
+        this.props.client.writeData({ data: { selectedRoomId: id } })
     }
 
     render() {
@@ -130,7 +131,7 @@ class Main extends React.Component<Props, State> {
                     </AppBar>
                     <div className={classes.page}>
                         <Switch>
-                            <Route path="/" component={Chat} />
+                            <Route path="/" component={QueryChat} />
                         </Switch>
                     </div>
                 </div>
@@ -139,4 +140,4 @@ class Main extends React.Component<Props, State> {
     }
 }
 
-export default withStyles(styles)(Main)
+export default withStyles(styles)(withApollo(Main))

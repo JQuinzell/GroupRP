@@ -22,28 +22,28 @@ const styles = createStyles({
     }
 })
 
-interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithStyles<typeof styles> {
+    room: {
+        name: string
+        posts: Array<{
+            _id: string
+            body: string
+        }>
+    }
+}
 
 class Chat extends React.Component<Props> {
     render() {
-        const messages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+        const posts = this.props.room.posts
         const { classes } = this.props
         return (
             <div className={classes.container}>
                 <div className={classes.messageContainer}>
                     <div className={classes.messages}>
-                        {messages.map(i => (
-                            <div className={classes.item} key={i}>
+                        {posts.map(post => (
+                            <div className={classes.item} key={post._id}>
                                 <Paper className={classes.message}>
-                                    <Typography variant="body1">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. At saepe, repudiandae consectetur distinctio, illum
-                                        corporis accusamus officiis itaque placeat inventore beatae doloremque laudantium blanditiis non reiciendis
-                                        nostrum. Reprehenderit eveniet assumenda officia nulla culpa quis, a quas ex tempore non, et ratione hic ipsa
-                                        perspiciatis nobis quam libero possimus cum sequi voluptates iure quos nesciunt illo voluptate. Itaque in
-                                        assumenda quis modi optio, eius consequuntur provident molestias expedita dolorem porro asperiores nihil dicta
-                                        quaerat ex sapiente. Quibusdam ea assumenda inventore eaque! Cupiditate ipsum reprehenderit ut aperiam a
-                                        deserunt ipsam atque iure autem fugiat? Dolore, commodi assumenda magni magnam fugit ipsam labore!
-                                    </Typography>
+                                    <Typography variant="body1">{post.body}</Typography>
                                 </Paper>
                             </div>
                         ))}
