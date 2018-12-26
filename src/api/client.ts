@@ -1,6 +1,11 @@
 import ApolloClient from 'apollo-boost'
-import gql from 'graphql-tag'
 
-export const client = new ApolloClient({
-    uri: 'http://localhost:4000/graphql'
+export default new ApolloClient({
+    uri: 'http://localhost:4000/graphql',
+    clientState: {
+        defaults: {
+            selectedRoomId: null
+        },
+        resolvers: {}
+    }
 })
