@@ -17,7 +17,7 @@ const styles = createStyles({
     },
     messages: {},
     message: {
-        marginTop: 16,
+        margin: '15px 0',
         padding: 15
     }
 })
