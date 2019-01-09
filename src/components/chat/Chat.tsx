@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Avatar, TextField, WithStyles, createStyles, withStyles, Paper, Typography } from '@material-ui/core'
+import { Avatar, WithStyles, createStyles, withStyles, Paper, Typography } from '@material-ui/core'
+import ChatInput from './ChatInput'
 
 const styles = createStyles({
     input: {
@@ -66,18 +67,7 @@ class Chat extends React.Component<Props> {
                                         Username:{' '}
                                     </Typography>
                                     <Typography variant="body1" classes={{ root: classes.text }}>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam soluta eligendi ab dolore, enim magnam nulla
-                                        quibusdam! Voluptatem obcaecati, voluptatibus accusamus accusantium culpa officiis dolorem incidunt amet
-                                        libero quibusdam debitis voluptates, et minima deleniti ab fugiat placeat, esse aliquam eos recusandae? Velit
-                                        neque voluptate beatae! Nobis, voluptatibus delectus perferendis quis porro maxime, ab, laudantium beatae
-                                        repellendus molestiae ea culpa voluptas quasi doloremque temporibus natus enim accusamus obcaecati recusandae
-                                        possimus ipsam dolores ipsum! Perferendis, nisi facere. Ab quo obcaecati dolorum eligendi hic nulla quibusdam
-                                        ad, eveniet assumenda dolor impedit laborum a quasi molestiae quam sint, blanditiis similique dolorem nostrum
-                                        aut atque? neque voluptate beatae! Nobis, voluptatibus delectus perferendis quis porro maxime, ab, laudantium
-                                        beatae repellendus molestiae ea culpa voluptas quasi doloremque temporibus natus enim accusamus obcaecati
-                                        recusandae possimus ipsam dolores ipsum! Perferendis, nisi facere. Ab quo obcaecati dolorum eligendi hic nulla
-                                        quibusdam ad, eveniet assumenda dolor impedit laborum a quasi molestiae quam sint, blanditiis similique
-                                        dolorem nostrum aut atque?
+                                        {post.body}
                                     </Typography>
                                 </Paper>
                             </div>
@@ -85,7 +75,7 @@ class Chat extends React.Component<Props> {
                     </div>
                 </div>
                 <div>
-                    <TextField className={classes.input} multiline rows={3} fullWidth label="Chat" />
+                    <ChatInput />
                 </div>
             </div>
         )
