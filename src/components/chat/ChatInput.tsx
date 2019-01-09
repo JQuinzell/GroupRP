@@ -18,6 +18,12 @@ class ChatInput extends React.Component<Props, State> {
         body: ''
     }
 
+    addNewLine = () => {
+        this.setState(state => ({
+            body: state.body + '\n'
+        }))
+    }
+
     handleSubmit = () => {
         this.setState({ body: '' })
     }
@@ -25,7 +31,11 @@ class ChatInput extends React.Component<Props, State> {
     handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            this.handleSubmit()
+            if (e.ctrlKey) {
+                this.addNewLine()
+            } else {
+                this.handleSubmit()
+            }
         }
     }
 
