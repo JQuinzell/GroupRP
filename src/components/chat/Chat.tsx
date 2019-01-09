@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { Avatar, WithStyles, createStyles, withStyles, Paper, Typography } from '@material-ui/core'
 import ChatInput from './ChatInput'
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import ROOM_QUERY from 'queries/room'
 
 const styles = createStyles({
     input: {
@@ -40,6 +43,7 @@ const styles = createStyles({
 
 interface Props extends WithStyles<typeof styles> {
     room: {
+        _id: string
         name: string
         posts: Array<{
             _id: string
@@ -48,9 +52,32 @@ interface Props extends WithStyles<typeof styles> {
     }
 }
 
+const mutation = gql`
+    mutation post($body: String!, $room: String!) {
+        post(input: { body: $body, room: $room }) {
+            _id
+            body
+        }
+    }
+`
+
+interface Data {
+    post: {
+        _id: string
+    }
+}
+
+interface Variables {
+    body: string
+    room: string
+}
+
+class PostMutation extends Mutation<Data, Variables> {}
+
 class Chat extends React.Component<Props> {
     render() {
-        const posts = this.props.room.posts
+        const room = this.props.room
+        const posts = room.posts
         const { classes } = this.props
         return (
             <div className={classes.container}>
@@ -75,7 +102,22 @@ class Chat extends React.Component<Props> {
                     </div>
                 </div>
                 <div>
-                    <ChatInput />
+                    <PostMutation
+                        mutation={mutation}
+                        update={(cache, { data: { post } }) => {
+                            cache.writeQuery({
+                                query: ROOM_QUERY,
+                                data: {
+                                    room: {
+                                        ...room,
+                                        posts: [...room.posts, post]
+                                    }
+                                }
+                            })
+                        }}
+                    >
+                        {post => <ChatInput onSubmit={body => post({ variables: { body, room: room._id } })} />}
+                    </PostMutation>
                 </div>
             </div>
         )

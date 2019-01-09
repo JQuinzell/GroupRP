@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import { RouteComponentProps } from 'react-router-dom'
 import Chat from './Chat'
 import ChatSocket from './ChatSocket'
+import query from 'queries/room'
 
 interface MatchParams {
     room: string
@@ -14,19 +15,6 @@ interface Props extends RouteComponentProps<MatchParams> {}
 const idQuery = gql`
     {
         selectedRoomId @client
-    }
-`
-
-const query = gql`
-    query($id: String!) {
-        room(id: $id) {
-            _id
-            name
-            posts {
-                _id
-                body
-            }
-        }
     }
 `
 

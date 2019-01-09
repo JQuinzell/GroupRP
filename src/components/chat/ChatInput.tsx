@@ -7,7 +7,9 @@ const styles = createStyles({
     }
 })
 
-interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithStyles<typeof styles> {
+    onSubmit: (body: string) => void
+}
 
 interface State {
     body: string
@@ -25,7 +27,10 @@ class ChatInput extends React.Component<Props, State> {
     }
 
     handleSubmit = () => {
-        this.setState({ body: '' })
+        this.setState(state => {
+            this.props.onSubmit(state.body)
+            return { body: '' }
+        })
     }
 
     handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
